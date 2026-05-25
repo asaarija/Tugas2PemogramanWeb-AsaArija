@@ -23,11 +23,30 @@ onMounted(() => {
     bahanAjarApps.deliveryRecords.length = 0;
     bahanAjarApps.deliveryRecords.push(...deliveryRecords.value);
   }
+  // generate nomor DO awal
+  generateNextDONumber();
 });
+
+const generateNextDONumber = () => {
+  const year = new Date().getFullYear();
+  const prefix = `DO${year}-`;
+  let maxSeq = 0;
+
+  // check existing delivery records loaded from localStorage
+  deliveryRecords.value.forEach((r) => {
+    if (typeof r.nomorDO === "string" && r.nomorDO.startsWith(prefix)) {
+      const parts = r.nomorDO.split("-");
+      const seq = parseInt(parts[1], 10);
+      if (!isNaN(seq) && seq > maxSeq) maxSeq = seq;
+    }
+  });
+
+  const next = maxSeq + 1;
+  inputDONew.value = `${prefix}${String(next).padStart(3, "0")}`;
+};
 
 const handleSearch = () => {
   if (
-    !inputDONew.value.trim() ||
     !inputDateNew.value ||
     !inputNIMNew.value.trim() ||
     !inputNamaPenerimaNew.value.trim() ||
@@ -93,12 +112,14 @@ const handleSearch = () => {
   });
 
   // Reset form
-  inputDONew.value = "";
   inputDateNew.value = "";
   inputNIMNew.value = "";
   inputNamaPenerimaNew.value = "";
   inputEkspedisiNew.value = "";
   selectBahanAjarNew.value = "";
+
+  // nomor DO otomatis akan digenerate untuk entri berikutnya
+  generateNextDONumber();
 };
 
 const handleDelete = (id) => {
@@ -116,6 +137,13 @@ const handleDelete = (id) => {
       deliveryRecords.value = deliveryRecords.value.filter(
         (record) => record.id !== id,
       );
+      // update localStorage and shared apps array
+      localStorage.setItem(
+        "deliveryRecords",
+        JSON.stringify(deliveryRecords.value),
+      );
+      bahanAjarApps.deliveryRecords.length = 0;
+      bahanAjarApps.deliveryRecords.push(...deliveryRecords.value);
       Swal.fire({
         title: "Terhapus!",
         text: "Data pengiriman telah dihapus.",
@@ -144,8 +172,9 @@ const handleDelete = (id) => {
             v-model="inputDONew"
             type="text"
             id="nomorDO"
-            placeholder="Nomor DO (misal: 2023001234)"
-            class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            readonly
+            placeholder="Nomor DO akan digenerate otomatis"
+            class="border bg-gray-100 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             v-model="inputDateNew"
