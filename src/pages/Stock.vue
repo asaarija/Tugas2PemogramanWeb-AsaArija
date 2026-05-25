@@ -137,7 +137,7 @@ const handleSaveSuccess = (newItem) => {
       <select v-model="selectedStockFilter" class="rounded-lg border px-3 py-2">
         <option value="all">Semua Stok</option>
         <option value="stokKosong">Stok Kosong</option>
-        <option value="stokSafety">Stok Safety</option>
+        <option value="stokSafety">Stok tidak safety</option>
       </select>
 
       <select v-model="selectedUPBJJ" class="rounded-lg border px-3 py-2">
