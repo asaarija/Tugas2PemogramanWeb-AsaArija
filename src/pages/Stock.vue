@@ -22,25 +22,26 @@ const handleNavigate = (page) => {
 };
 
 const loadStockFromLocalStorage = () => {
+  // Cek localStorage terlebih dahulu
   const stored = localStorage.getItem("stok");
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // jika localStorage berisi array kosong, fallback ke apps.stok
       if (Array.isArray(parsed) && parsed.length > 0) {
         stokData.value = parsed;
-      } else if (Array.isArray(apps.stok) && apps.stok.length) {
-        stokData.value = [...apps.stok];
-      } else {
-        stokData.value = parsed || [];
+        return;
       }
     } catch (error) {
-      stokData.value = Array.isArray(apps.stok) ? [...apps.stok] : [];
+      console.error("Error parsing localStorage stok:", error);
     }
-  } else {
-    stokData.value = [...apps.stok];
   }
-  apps.stok = stokData.value;
+
+  // Fallback ke apps.stok dari dataBahanAjar.js
+  if (Array.isArray(apps.stok) && apps.stok.length > 0) {
+    stokData.value = [...apps.stok];
+  } else {
+    stokData.value = [];
+  }
 };
 
 onMounted(() => {

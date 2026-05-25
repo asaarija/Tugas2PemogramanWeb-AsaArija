@@ -49,7 +49,7 @@ export const apps = {
       catatanHTML: "<strong>Cover baru</strong>",
     },
     {
-      kode: "EKMA4115",
+      kode: "EKMA4112",
       judul: "Pengantar Akuntansi",
       kategori: "MK Wajib",
       upbjj: "Jakarta",
@@ -60,7 +60,7 @@ export const apps = {
       catatanHTML: "<strong>Cover baru</strong>",
     },
     {
-      kode: "EKMA4115",
+      kode: "EKMA4114",
       judul: "Pengantar Akuntansi",
       kategori: "Praktikum",
       upbjj: "Jakarta",
@@ -71,7 +71,7 @@ export const apps = {
       catatanHTML: "<strong>Cover baru</strong>",
     },
     {
-      kode: "EKMA4115",
+      kode: "EKMA41215",
       judul: "Pengantar Akuntansi",
       kategori: "MK Wajib",
       upbjj: "Jakarta",
@@ -82,7 +82,7 @@ export const apps = {
       catatanHTML: "<strong>Cover baru</strong>",
     },
     {
-      kode: "EKMA4115",
+      kode: "EKMA4215",
       judul: "Pengantar Akuntansi",
       kategori: "MK Pilihan",
       upbjj: "Jakarta",
